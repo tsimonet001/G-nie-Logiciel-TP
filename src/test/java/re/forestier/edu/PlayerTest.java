@@ -83,4 +83,13 @@ class PlayerTest {
         UpdatePlayer.addXp(p, 15);
         assertEquals(15, p.getXp());
     }
+
+    @Test
+void testRemoveMoneyExactBoundary() {
+    player p = new player("Tom", "Avatar", "ADVENTURER", 50, new ArrayList<>());
+    // On retire exactement le montant du solde
+    p.removeMoney(50);
+    assertEquals(0, p.money);
+}
+
 }
