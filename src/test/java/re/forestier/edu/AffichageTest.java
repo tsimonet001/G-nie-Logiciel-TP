@@ -69,5 +69,22 @@ void testAfficherJoueur_withEmptyInventory() {
     assertTrue(afterInventory.isEmpty() || !afterInventory.contains("\n   "), 
                "L'inventaire vide ne doit pas afficher d'objets");
 }
-
+@Test
+void testAfficherJoueurMarkdown() {
+    ArrayList<String> inventory = new ArrayList<>();
+    inventory.add("Épée magique");
+    inventory.add("Potion de vie");
+    
+    player p = new player("Tom", "Le Guerrier", "ADVENTURER", 100, inventory);
+    UpdatePlayer.addXp(p, 15);
+    
+    String markdown = Affichage.afficherJoueurMarkdown(p);
+    
+    // Vérifier le format Markdown
+    assertTrue(markdown.contains("# Tom"), "Doit contenir le titre avec #");
+    assertTrue(markdown.contains("**Le Guerrier**"), "Le nom d'avatar doit être en gras");
+    assertTrue(markdown.contains("*ADVENTURER*"), "La classe doit être en italique");
+    assertTrue(markdown.contains("* Épée magique"), "Les objets doivent être en liste");
+    assertTrue(markdown.contains("* Potion de vie"));
+}
 }
