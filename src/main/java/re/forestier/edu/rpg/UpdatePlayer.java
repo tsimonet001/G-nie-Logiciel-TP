@@ -19,10 +19,10 @@ public class UpdatePlayer {
         adventurerLevel1.put("CHA", 2);
         adventurerMap.put(1, adventurerLevel1);
 
-        // ✅ APRÈS (CORRIGÉ)
+        // ✅ CORRECTION DU BUG ICI
         HashMap<String, Integer> adventurerLevel2 = new HashMap<>();
-        adventurerLevel2.put("INT", 2);  // ✅ Bonne HashMap
-        adventurerLevel2.put("CHA", 3);  // ✅ Bonne HashMap
+        adventurerLevel2.put("INT", 2);  // ✅ Utilise adventurerLevel2 au lieu de adventurerLevel1
+        adventurerLevel2.put("CHA", 3);  // ✅ Utilise adventurerLevel2 au lieu de adventurerLevel1
         adventurerMap.put(2, adventurerLevel2);
 
         HashMap<String, Integer> adventurerLevel3 = new HashMap<>();
@@ -107,9 +107,8 @@ public class UpdatePlayer {
         if (newLevel != currentLevel) {
             // Player leveled-up!
             // Give a random object
-            ;
             Random random = new Random();
-            player.inventory.add(objectList[random.nextInt(objectList.length - 0) + 0]);
+            player.inventory.add(objectList[random.nextInt(objectList.length)]);
 
             // Add/upgrade abilities to player
             HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
