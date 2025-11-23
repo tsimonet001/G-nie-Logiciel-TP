@@ -93,6 +93,35 @@ public class UpdatePlayer {
 
         abilitiesPerTypeAndLevel.put("DWARF", dwarf);
 
+// Ajoute ceci AVANT la ligne "return abilitiesPerTypeAndLevel;"
+
+HashMap<Integer, HashMap<String, Integer>> goblinMap = new HashMap<>();
+HashMap<String, Integer> goblinLevel1 = new HashMap<>();
+goblinLevel1.put("INT", 2);
+goblinLevel1.put("ATK", 2);
+goblinLevel1.put("ALC", 1);
+goblinMap.put(1, goblinLevel1);
+
+HashMap<String, Integer> goblinLevel2 = new HashMap<>();
+goblinLevel2.put("ATK", 3);
+goblinLevel2.put("ALC", 4);
+goblinMap.put(2, goblinLevel2);
+
+HashMap<String, Integer> goblinLevel3 = new HashMap<>();
+goblinLevel3.put("VIS", 1);
+goblinMap.put(3, goblinLevel3);
+
+HashMap<String, Integer> goblinLevel4 = new HashMap<>();
+goblinLevel4.put("DEF", 1);
+goblinMap.put(4, goblinLevel4);
+
+HashMap<String, Integer> goblinLevel5 = new HashMap<>();
+goblinLevel5.put("DEF", 2);
+goblinLevel5.put("ATK", 4);
+goblinMap.put(5, goblinLevel5);
+
+abilitiesPerTypeAndLevel.put("GOBLIN", goblinMap);
+
         return abilitiesPerTypeAndLevel;
     }
 
@@ -155,7 +184,10 @@ public class UpdatePlayer {
                 player.currenthealthpoints += calculateArcherHealing(player);
             } else if (avatarClass.equals("ADVENTURER")) {
                 player.currenthealthpoints += calculateAdventurerHealing(player);
+            } else if (avatarClass.equals("GOBLIN")) {
+                player.currenthealthpoints += 1; // Les gobelins soignent 1 HP
             }
+            
         }
 
         if (player.currenthealthpoints > player.healthpoints) {
