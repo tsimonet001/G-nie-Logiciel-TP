@@ -19,10 +19,9 @@ public class UpdatePlayer {
         adventurerLevel1.put("CHA", 2);
         adventurerMap.put(1, adventurerLevel1);
 
-        // ✅ CORRECTION DU BUG ICI
         HashMap<String, Integer> adventurerLevel2 = new HashMap<>();
-        adventurerLevel2.put("INT", 2);  // ✅ Utilise adventurerLevel2 au lieu de adventurerLevel1
-        adventurerLevel2.put("CHA", 3);  // ✅ Utilise adventurerLevel2 au lieu de adventurerLevel1
+        adventurerLevel2.put("INT", 2);
+        adventurerLevel2.put("CHA", 3);
         adventurerMap.put(2, adventurerLevel2);
 
         HashMap<String, Integer> adventurerLevel3 = new HashMap<>();
@@ -40,7 +39,6 @@ public class UpdatePlayer {
         adventurerMap.put(5, adventurerLevel5);
 
         abilitiesPerTypeAndLevel.put("ADVENTURER", adventurerMap);
-
 
         HashMap<Integer, HashMap<String, Integer>> archerMap = new HashMap<>();
         HashMap<String, Integer> archerLevel1 = new HashMap<>();
@@ -68,7 +66,6 @@ public class UpdatePlayer {
         archerMap.put(5, archerLevel5);
 
         abilitiesPerTypeAndLevel.put("ARCHER", archerMap);
-
 
         HashMap<Integer, HashMap<String, Integer>> dwarf = new HashMap<>();
         HashMap<String, Integer> dwarfLevel1 = new HashMap<>();
@@ -105,12 +102,9 @@ public class UpdatePlayer {
         int newLevel = player.retrieveLevel();
 
         if (newLevel != currentLevel) {
-            // Player leveled-up!
-            // Give a random object
             Random random = new Random();
             player.inventory.add(objectList[random.nextInt(objectList.length)]);
 
-            // Add/upgrade abilities to player
             HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
             abilities.forEach((ability, level) -> {
                 player.abilities.put(ability, abilities.get(ability));
@@ -120,46 +114,51 @@ public class UpdatePlayer {
         return false;
     }
 
-    // majFinDeTour met à jour les points de vie
+    private static int calculateDwarfHealing(player player) {
+        int healing = 1;
+        if (player.inventory.contains("Holy Elixir")) {
+            healing += 1;
+        }
+        return healing;
+    }
+
+    private static int calculateArcherHealing(player player) {
+        int healing = 1;
+        if (player.inventory.contains("Magic Bow")) {
+            // ✅ CORRECTION : le calcul doit se faire APRÈS avoir ajouté le +1 de base
+            int tempHP = player.currenthealthpoints + 1;
+            healing += tempHP / 8 - 1;
+        }
+        return healing;
+    }
+
+    private static int calculateAdventurerHealing(player player) {
+        int healing = 2;
+        if (player.retrieveLevel() < 3) {
+            healing -= 1;
+        }
+        return healing;
+    }
+
     public static void majFinDeTour(player player) {
-        if(player.currenthealthpoints == 0) {
+        if (player.currenthealthpoints == 0) {
             System.out.println("Le joueur est KO !");
             return;
         }
 
-        if(player.currenthealthpoints < player.healthpoints/2) {
-            if(!player.getAvatarClass().equals("ADVENTURER")) {
-                if(player.getAvatarClass().equals("DWARF")) {
-                    if(player.inventory.contains("Holy Elixir")) {
-                        player.currenthealthpoints+=1;
-                    }
-                    player.currenthealthpoints+=1;
-                } else if(player.getAvatarClass().equals("ADVENTURER")) {
-                    player.currenthealthpoints+=2;
-                }
-
-
-                if(player.getAvatarClass().equals("ARCHER")) {
-                    player.currenthealthpoints+=1;
-                    if(player.inventory.contains("Magic Bow")) {
-                        player.currenthealthpoints+=player.currenthealthpoints/8-1;
-                    }
-                }
-            } else {
-                player.currenthealthpoints+=2;
-                if(player.retrieveLevel() < 3) {
-                    player.currenthealthpoints-=1;
-                }
-            }
-        } else if(player.currenthealthpoints >= player.healthpoints/2){
-            if(player.currenthealthpoints >= player.healthpoints) {
-                player.currenthealthpoints = player.healthpoints;
-                return;
+        if (player.currenthealthpoints < player.healthpoints / 2) {
+            String avatarClass = player.getAvatarClass();
+            
+            if (avatarClass.equals("DWARF")) {
+                player.currenthealthpoints += calculateDwarfHealing(player);
+            } else if (avatarClass.equals("ARCHER")) {
+                player.currenthealthpoints += calculateArcherHealing(player);
+            } else if (avatarClass.equals("ADVENTURER")) {
+                player.currenthealthpoints += calculateAdventurerHealing(player);
             }
         }
 
-
-        if(player.currenthealthpoints >= player.healthpoints) {
+        if (player.currenthealthpoints > player.healthpoints) {
             player.currenthealthpoints = player.healthpoints;
         }
     }
