@@ -19,9 +19,10 @@ public class UpdatePlayer {
         adventurerLevel1.put("CHA", 2);
         adventurerMap.put(1, adventurerLevel1);
 
+        // ✅ APRÈS (CORRIGÉ)
         HashMap<String, Integer> adventurerLevel2 = new HashMap<>();
-        adventurerLevel1.put("INT", 2);
-        adventurerLevel1.put("CHA", 3);
+        adventurerLevel2.put("INT", 2);  // ✅ Bonne HashMap
+        adventurerLevel2.put("CHA", 3);  // ✅ Bonne HashMap
         adventurerMap.put(2, adventurerLevel2);
 
         HashMap<String, Integer> adventurerLevel3 = new HashMap<>();
