@@ -966,4 +966,14 @@ void testConsoleOutputPlayerKOMessage() {
     System.setOut(System.out); // Restore original output
 }
 
+@Test
+void testMajFinDeTour_GoblinHealing() {
+    player p = new player("Gob", "Gobby", "GOBLIN", 100, new ArrayList<>());
+    p.healthpoints = 10;
+    p.currenthealthpoints = 4; // < 5 (moitié)
+    
+    UpdatePlayer.majFinDeTour(p);
+    assertEquals(5, p.currenthealthpoints, "Gobelin doit soigner 1 HP");
+}
+
 }
