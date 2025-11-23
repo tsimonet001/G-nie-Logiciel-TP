@@ -87,4 +87,18 @@ void testAfficherJoueurMarkdown() {
     assertTrue(markdown.contains("* Épée magique"), "Les objets doivent être en liste");
     assertTrue(markdown.contains("* Potion de vie"));
 }
+
+@Test
+void testAfficherJoueurMarkdown_WithAbilities() {
+    ArrayList<String> inventory = new ArrayList<>();
+    player p = new player("Test", "Hero", "DWARF", 100, inventory);
+    
+    String markdown = Affichage.afficherJoueurMarkdown(p);
+    
+    // Vérifier que les capacités sont listées
+    assertTrue(markdown.contains("## Capacités"));
+    assertTrue(markdown.contains("* ALC : 4"));
+    assertTrue(markdown.contains("* INT : 1"));
+    assertTrue(markdown.contains("* ATK : 3"));
+}
 }
