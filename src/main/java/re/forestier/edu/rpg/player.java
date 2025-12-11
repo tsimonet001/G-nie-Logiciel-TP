@@ -14,12 +14,10 @@ public class player {
     public int currenthealthpoints;
     protected int xp;
     
-    // NOUVEAU : poids maximal
-    private int maxWeight = 50; // Par défaut 50
+    private int maxWeight = 50;
 
     public HashMap<String, Integer> abilities;
     
-    // MODIFIÉ : ArrayList<Item> au lieu de ArrayList<String>
     public ArrayList<Item> inventory;
     
     public player(String playerName, String avatar_name, String avatarClass, int money, ArrayList<Item> inventory) {
@@ -50,7 +48,7 @@ public class player {
         money += amount;
     }
     
-    // NOUVEAU : méthode pour vendre un objet
+    // Méthode pour vendre un objet
     public boolean sell(Item item) {
         if (!inventory.contains(item)) {
             return false;
@@ -60,7 +58,7 @@ public class player {
         return true;
     }
     
-    // NOUVEAU : méthode pour ajouter un objet avec vérification du poids
+    // Méthode pour ajouter un objet avec vérification du poids
     public boolean addItem(Item item) {
         int currentWeight = getCurrentWeight();
         if (currentWeight + item.getWeight() > maxWeight) {
@@ -70,19 +68,19 @@ public class player {
         return true;
     }
     
-    // NOUVEAU : calculer le poids actuel
+    // Calculer le poids actuel
     public int getCurrentWeight() {
         return inventory.stream()
                        .mapToInt(Item::getWeight)
                        .sum();
     }
     
-    // NOUVEAU : obtenir le poids maximal
+    // Obtenir le poids maximal
     public int getMaxWeight() {
         return maxWeight;
     }
     
-    // NOUVEAU : définir le poids maximal
+    // Définir le poids maximal
     public void setMaxWeight(int maxWeight) {
         this.maxWeight = maxWeight;
     }
