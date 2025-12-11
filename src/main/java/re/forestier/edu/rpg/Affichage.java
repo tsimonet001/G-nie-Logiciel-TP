@@ -48,7 +48,7 @@ public class Affichage {
                   .append(item.getValue()).append(" po)\n");
             });
         }
-        
+        //
         return md.toString();
     }
 }
