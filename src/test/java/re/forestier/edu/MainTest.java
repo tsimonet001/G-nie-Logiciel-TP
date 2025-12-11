@@ -15,19 +15,19 @@ public class MainTest {
 
     @Test
     public void testMainExecutionAndOutput() {
-        // Capturer la sortie console
+        // Capture la sortie console
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outContent));
 
         try {
-            // Exécuter main
+            // Exécute main
             Main.main(new String[0]);
             
-            // Récupérer la sortie
+            // Récupére la sortie
             String output = outContent.toString();
             
-            // TUER LES MUTANTS DES println (lignes 14, 15, 17)
+            // TUE LES MUTANTS DES println (lignes 14, 15, 17)
             assertTrue(output.contains("Florian"), "La sortie doit contenir le nom du joueur");
             assertTrue(output.contains("Ruzberg de Rivehaute"), "La sortie doit contenir le nom d'avatar");
             assertTrue(output.contains("Niveau :"), "La sortie doit contenir le niveau");
@@ -61,11 +61,11 @@ public class MainTest {
 
         player testPlayer = new player("Florian", "Ruzberg de Rivehaute", "DWARF", 200, new ArrayList<>());
 
-        // Vérifier addMoney
+        // Vérifie addMoney
         testPlayer.addMoney(400);
         assertEquals(600, testPlayer.money, "Le joueur doit avoir 600 après addMoney(400)");
 
-        // Vérifier addXp
+        // Vérifie addXp
         UpdatePlayer.addXp(testPlayer, 15);
         assertTrue(testPlayer.retrieveLevel() >= 1);
 
@@ -109,13 +109,13 @@ public class MainTest {
         // Le joueur commence avec 200
         assertEquals(200, testPlayer.money, "Le joueur doit commencer avec 200");
         
-        // Appeler addMoney(400) comme dans Main
+        // Appele addMoney(400) comme dans Main
         testPlayer.addMoney(400);
         
         // Après addMoney, le joueur doit avoir 600
         assertEquals(600, testPlayer.money, "Après addMoney(400), le joueur doit avoir 600");
         
-        // Vérifier que le montant a bien changé
+        // Vérifie que le montant a bien changé
         assertNotEquals(200, testPlayer.money, "L'argent ne doit plus être 200 après addMoney");
     }
     
@@ -145,16 +145,16 @@ public void testMainScenario_VerifyAddMoneyIsCalled() {
     // Reproduire EXACTEMENT le scénario de Main.main()
     player firstPlayer = new player("Florian", "Ruzberg de Rivehaute", "DWARF", 200, new ArrayList<>());
     
-    // Vérifier l'argent AVANT addMoney
+    // Vérifie l'argent AVANT addMoney
     assertEquals(200, firstPlayer.money, "Le joueur doit commencer avec 200");
     
-    // Appeler addMoney comme dans Main.main()
+    // Appele addMoney comme dans Main.main()
     firstPlayer.addMoney(400);
     
-    // Vérifier l'argent APRÈS addMoney
+    // Vérifie l'argent APRÈS addMoney
     assertEquals(600, firstPlayer.money, "Après addMoney(400), le joueur doit avoir 600");
     
-    // Continuer avec le reste du scénario pour coller à Main.main()
+    // Continue avec le reste du scénario pour coller à Main.main()
     UpdatePlayer.addXp(firstPlayer, 15);
     String output1 = Affichage.afficherJoueur(firstPlayer);
     assertTrue(output1.contains("Florian"));
@@ -163,7 +163,7 @@ public void testMainScenario_VerifyAddMoneyIsCalled() {
     String output2 = Affichage.afficherJoueur(firstPlayer);
     assertTrue(output2.contains("Florian"));
     
-    // Vérifier que l'argent n'a pas changé après les addXp
+    // Vérifie que l'argent n'a pas changé après les addXp
     assertEquals(600, firstPlayer.money, "L'argent doit rester à 600 après les opérations");
 }
 }
