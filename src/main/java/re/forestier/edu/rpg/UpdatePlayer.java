@@ -101,8 +101,6 @@ public class UpdatePlayer {
 
         abilitiesPerTypeAndLevel.put("DWARF", dwarf);
 
-// Ajoute ceci AVANT la ligne "return abilitiesPerTypeAndLevel;"
-
 HashMap<Integer, HashMap<String, Integer>> goblinMap = new HashMap<>();
 HashMap<String, Integer> goblinLevel1 = new HashMap<>();
 goblinLevel1.put("INT", 2);
@@ -142,7 +140,7 @@ abilitiesPerTypeAndLevel.put("GOBLIN", goblinMap);
             Random random = new Random();
             Item newItem = objectList[random.nextInt(objectList.length)];
             
-            // Essayer d'ajouter l'objet (avec vérification du poids)
+            
             if (!player.addItem(newItem)) {
                 // Si trop lourd, donner de l'argent à la place
                 player.addMoney(newItem.getValue());
@@ -159,7 +157,7 @@ abilitiesPerTypeAndLevel.put("GOBLIN", goblinMap);
 
     private static int calculateDwarfHealing(player player) {
         int healing = 1;
-        // MODIFIÉ : vérifier par nom d'item
+        // Vérifier par nom d'item
         if (player.inventory.stream().anyMatch(item -> item.getName().equals("Holy Elixir"))) {
             healing += 1;
         }
@@ -168,7 +166,7 @@ abilitiesPerTypeAndLevel.put("GOBLIN", goblinMap);
 
     private static int calculateArcherHealing(player player) {
         int healing = 1;
-        // MODIFIÉ : vérifier par nom d'item
+        // Vérifier par nom d'item
         if (player.inventory.stream().anyMatch(item -> item.getName().equals("Magic Bow"))) {
             int tempHP = player.currenthealthpoints + 1;
             healing += tempHP / 8 - 1;
